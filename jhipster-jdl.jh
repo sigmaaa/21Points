@@ -1,0 +1,42 @@
+entity Album {
+    title String required,
+    description TextBlob,
+    created Instant
+}
+
+entity Photo {
+    title String required,
+    description TextBlob,
+    image ImageBlob required,
+    height Integer,
+    width Integer,
+    taken Instant,
+    uploaded Instant
+}
+
+entity Points {
+	date LocalDate required,
+    event String required
+}
+
+entity Others {
+    description TextBlob,
+  	content String
+}
+entity Tag {
+    name String required minlength(2)
+}
+
+relationship ManyToOne {
+    Album{user(login)} to User,
+    Points{user(login)} to User,
+    Photo{album(title)} to Album,
+    Others{user (login)} to User
+}
+
+relationship ManyToMany {
+    Photo{tag(name)} to Tag{photo}
+}
+
+paginate Album with pagination
+paginate Photo, Tag with infinite-scroll

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
-import { User, UserService } from 'app/core';
+import { User } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html'
 })
-export class UserMgmtUpdateComponent implements OnInit {
+export class UserManagementUpdateComponent implements OnInit {
   user: User;
-  languages: any[];
   authorities: any[];
   isSaving: boolean;
 
@@ -25,7 +25,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     authorities: []
   });
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private fb: FormBuilder) {}
+  constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.isSaving = false;
@@ -60,10 +60,10 @@ export class UserMgmtUpdateComponent implements OnInit {
     this.isSaving = true;
     this.updateUser(this.user);
     if (this.user.id !== null) {
-      this.userService.update(this.user).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.userService.update(this.user).subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
     } else {
       this.user.langKey = 'en';
-      this.userService.create(this.user).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.userService.create(this.user).subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
     }
   }
 
@@ -77,7 +77,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     user.authorities = this.editForm.get(['authorities']).value;
   }
 
-  private onSaveSuccess(result) {
+  private onSaveSuccess() {
     this.isSaving = false;
     this.previousState();
   }

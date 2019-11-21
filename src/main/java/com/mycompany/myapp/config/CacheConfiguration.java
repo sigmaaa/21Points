@@ -20,8 +20,7 @@ public class CacheConfiguration {
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(JHipsterProperties jHipsterProperties) {
-        JHipsterProperties.Cache.Ehcache ehcache =
-            jHipsterProperties.getCache().getEhcache();
+        JHipsterProperties.Cache.Ehcache ehcache = jHipsterProperties.getCache().getEhcache();
 
         jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
             CacheConfigurationBuilder.newCacheConfigurationBuilder(Object.class, Object.class,
@@ -43,6 +42,13 @@ public class CacheConfiguration {
             createCache(cm, com.mycompany.myapp.domain.User.class.getName());
             createCache(cm, com.mycompany.myapp.domain.Authority.class.getName());
             createCache(cm, com.mycompany.myapp.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.mycompany.myapp.domain.Album.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.Photo.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.Photo.class.getName() + ".tags");
+            createCache(cm, com.mycompany.myapp.domain.Points.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.Others.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.Tag.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.Tag.class.getName() + ".photos");
             // jhipster-needle-ehcache-add-entry
         };
     }
@@ -54,4 +60,5 @@ public class CacheConfiguration {
         }
         cm.createCache(cacheName, jcacheConfiguration);
     }
+
 }
