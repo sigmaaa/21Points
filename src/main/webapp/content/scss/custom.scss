@@ -4,6 +4,8 @@
 .jh-card {
   background-image: url('../../content/images/Image.jpg');
   margin: 0 !important;
+  resize: both;
+  background-size: cover;
 }
 
 .footer {
